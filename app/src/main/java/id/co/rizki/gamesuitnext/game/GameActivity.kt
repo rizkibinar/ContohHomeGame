@@ -1,8 +1,12 @@
 package id.co.rizki.gamesuitnext.game
 
+import android.app.AlertDialog
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -146,6 +150,34 @@ class GameActivity : AppCompatActivity() {
         textRefresh.text = "Refresh" // +1 string udah di extract, memudahkan translate
         Toast.makeText(this, getTextResult, Toast.LENGTH_SHORT).show()
         logD("Result = $getTextResult")
+
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        val viewCustom = LayoutInflater.from(this).inflate(R.layout.dialog_winner, null, false)
+
+        dialogBuilder.setView(viewCustom)
+
+        val dialog = dialogBuilder.create()
+
+        val btnRefresh = viewCustom.findViewById<Button>(R.id.btn_refresh)
+        val btnBack = viewCustom.findViewById<Button>(R.id.btn_back)
+        val tvResult = viewCustom.findViewById<TextView>(R.id.tv_result)
+
+        tvResult.text = getTextResult
+
+        btnRefresh.setOnClickListener {
+            dialog.dismiss()
+            clearView()
+        }
+
+        btnBack.setOnClickListener {
+            finish()
+        }
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent);
+
+        dialog.show()
+
+
     }
 
 
